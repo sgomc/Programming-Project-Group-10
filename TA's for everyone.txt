@@ -1,0 +1,27 @@
+The idea - first screen: map of the U.S., the user can select the state (highlighting the button).
+When the user clicks on the state, there is a list of airports pops out on the right, sorted by more active airport goes first (with more flights).
+The user can select the specific airport or they can search for the specific flight.
+
+When we click on the airport, we have a window with tabs, the first shown tab is departures, the second tab that can be selected is arrivals.
+
+Things that we have to do:
++get the menu
++separate data for each state
++find the clear U.S map to put the state names there
++connect the menu to the state (state is a buton with a name)  (data)
++create the tabs and window for the airport selected
++create buttons for each state
++stats
+
+MacColins - class statistics (histogram)
+
+Veronika - get the menu for flights int the state
+         - connect the menu to the state (state is a buton with a name)  (data)
+
+Amy - create the tabs and window for the airport selected (departures and arrivals)
+
+Stephen - find the clear U.S. map
+        - list all the airports
+        - find their coordinates in Processing 
+
+Tommy - create buttons for each state
