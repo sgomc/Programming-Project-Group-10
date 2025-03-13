@@ -1,5 +1,5 @@
 PImage image;
-City washington = new City(1,2);
+City washington = new City();
 void setup()
 {
   size(2000,1000);
