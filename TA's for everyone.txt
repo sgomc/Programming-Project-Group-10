@@ -15,13 +15,15 @@ Things that we have to do:
 
 MacColins - class statistics (histogram)
 
-Veronika - get the menu for flights int the state
+Veronika + get the menu for flights int the state
+         + create the tabs and window for the airport selected (departures and arrivals)
          - connect the menu to the state (state is a buton with a name)  (data)
 
-Amy - create the tabs and window for the airport selected (departures and arrivals)
+Amy      - filter by dates, lateness, and allow the user to input a flight number and implement a scroll down button to see              more of the flights
 
-Stephen - find the clear U.S. map
-        - list all the airports
-        - find their coordinates in Processing 
 
-Tommy - create buttons for each state
+Stephen + find the clear U.S. map
+        = list all the airports (in progress)
+        = find their coordinates in Processing (in progress)
+
+Tommy   - create buttons for each state
