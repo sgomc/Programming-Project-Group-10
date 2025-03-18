@@ -1,0 +1,33 @@
+class Tabs {
+  int tabWidth = 150;
+  int tabHeight = 50;
+  int departuresX = 50;
+  int arrivalsX = 250;
+  int tabY = 50;
+
+  void display() {
+    //the departures tab
+    fill(200);
+    rect(departuresX, tabY, tabWidth, tabHeight);
+    fill(0);
+    textSize(20);
+    text("Departures", departuresX + 20, tabY + 30);
+
+    //this is for the arrivals tab
+    fill(200);
+    rect(arrivalsX, tabY, tabWidth, tabHeight);
+    fill(0);
+    text("Arrivals", arrivalsX + 30, tabY + 30);
+    
+    fill(200);
+    rect(tabWidth, tabHeight);
+  }
+
+  boolean isDeparturesClicked(int mx, int my) {
+    return mx > departuresX && mx < departuresX + tabWidth && my > tabY && my < tabY + tabHeight;
+  }
+
+  boolean isArrivalsClicked(int mx, int my) {
+    return mx > arrivalsX && mx < arrivalsX + tabWidth && my > tabY && my < tabY + tabHeight;
+  }
+}
