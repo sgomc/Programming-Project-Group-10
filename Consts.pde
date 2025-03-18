@@ -1,4 +1,4 @@
-static final int BUTTON_TEXT_SIZE = 20; //Move this to consts file...
+static final int BUTTON_TEXT_SIZE = 25; 
 final color DEFAULT_TEXT_COLOR = color(0);
 final color HIGHLIGHTED_TEXT_COLOR = color(255);
 
