@@ -11,6 +11,7 @@ void setup()
 
 void draw()
 {
+  background(50);
   //image = loadImage("united-states-of-america-map-free-vector.jpg");
   image = loadImage("UsaMapGrey.png"); //This map is still a placeholder, but more appropriate for now.
   
@@ -19,6 +20,9 @@ void draw()
   washington.draw();
   alabama.run();
   arizona.run();
+
+  //DEBUG ONLY - DON'T DISPLAY IN ACTUAL PROJECT
+  displayCoords();
   
   mouseReleased();
 }
