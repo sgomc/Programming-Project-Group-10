@@ -1,7 +1,0 @@
-class home
-{
-  public home()
-  {
-  
-  }
-}
