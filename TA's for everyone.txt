@@ -19,7 +19,7 @@ Veronika + get the menu for flights int the state
          + create the tabs and window for the airport selected (departures and arrivals)
          - connect the menu to the state (state is a buton with a name)  (data)
 
-Amy      - filter by dates, lateness, and allow the user to input a flight number and implement a scroll down button to see              more of the flights
+Amy      - filter by dates, lateness, and allow the user to input a flight number and implement a scroll down button to see more of the flights
 
 
 Stephen + find the clear U.S. map
