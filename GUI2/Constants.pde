@@ -60,3 +60,9 @@ enum State
     SAIPAN,
     VIRGIN_ISLANDS
 }
+
+enum SearchbarType
+{
+  SEARCHBAR_FLIGHT_NUMBER,
+  SEARCHBAR_DATE,
+}
