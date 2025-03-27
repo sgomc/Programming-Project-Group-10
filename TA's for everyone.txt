@@ -13,17 +13,28 @@ Things that we have to do:
 +create buttons for each state
 +stats
 
-MacColins - class statistics (histogram)
+MacColins + class statistics (histogram)
+          - Optimization with data loading
+          + intro
 
 Veronika + get the menu for flights int the state
          + create the tabs and window for the airport selected (departures and arrivals)
-         - connect the menu to the state (state is a buton with a name)  (data)
+         + connect the menu to the state (state is a buton with a name)  (data)
+         + A bit more colour to the project, colour the windows
+         - colour the map regarding the amount of airports in state
 
-Amy      - filter by dates, lateness, and allow the user to input a flight number and implement a scroll down button to see more of the flights
+Amy      + filter by dates, lateness, and allow the user to input a flight number and implement a scroll down button to see more of the flights
+         + More user friendly interface
+         + Show only delayed flights with radio button
 
 
-Stephen + find the clear U.S. map
-        = list all the airports (in progress)
-        = find their coordinates in Processing (in progress)
+Stephen  + find the clear U.S. map
+         + list all the airports 
+         + find their coordinates in Processing 
+         =  Add the plane which will fly to the selected location (Stephen proposed idea before) -> select the flight from departures arrivals, click on it, then the windows          close to show the simulation, and then they open again at the point they were before.
 
-Tommy   - create buttons for each state
+Tommy    + create buttons for each state
+         + Search for date, 22/01/2022, 22 January
+         
+
+- Add something to main menu
