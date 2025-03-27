@@ -1,7 +1,6 @@
 class DeparturesArrivals extends Window {
   String selectedTab = "Departures";
   Tab departuresTab, arrivalsTab;
-  String searchBar ="";
   String selectedDate= "";
   ArrayList<Flight> flights = new ArrayList<Flight>(); // Use Flight instead of DataPoint
   ArrayList<Flight> allFlights = new ArrayList<Flight>();
@@ -18,6 +17,8 @@ class DeparturesArrivals extends Window {
   boolean isDraggingThumb = false;
   float lastMouseY = 0;
   float offsetY = 0;
+  ArrayList<Searchbar> searchbars = new ArrayList<Searchbar>();
+  String searchbar = "";
 
   DeparturesArrivals(int x, int y, int w, int h) {
     super(x, y, w, h);
@@ -26,6 +27,8 @@ class DeparturesArrivals extends Window {
     loadFlights();
     flights.clear();
     flightsPerPage = (h - tableStartY - 30) / rowHeight;
+    searchbars.add(new Searchbar(150+x, 65+y, 200, 25, SearchbarType.SEARCHBAR_FLIGHT_NUMBER, this));
+    searchbars.add(new Searchbar(150+x, 95+y, 200, 25, SearchbarType.SEARCHBAR_DATE, this));
   }
 
   void display() {
@@ -34,23 +37,13 @@ class DeparturesArrivals extends Window {
     departuresTab.draw();
     arrivalsTab.draw();
 
+    for (Searchbar s : searchbars)
+    {
+      s.draw();
+    }
+
     pushMatrix();
     translate(x, y);  // Move the coordinate system to the window's position
-
-    fill(0);
-    textSize(20);
-    textAlign(LEFT, TOP);  // Ensures text is aligned properly
-    text("Search Flight:", 20, 70);
-    fill(255);
-    rect(150, 65, 200, 25);
-    fill(0);
-    text(searchBar, 155, 70);
-
-    text("Select Date:", 20, 100);
-    fill(255);
-    rect(150, 95, 200, 25);
-    fill(0);
-    text(selectedDate, 155, 100);
 
     // Display flights table header
     int headerY = 140;
@@ -70,7 +63,7 @@ class DeparturesArrivals extends Window {
     noStroke();
 
     tableBodyY = tableY + 40;
-    tableBodyHeight = height - tableBodyY - 120 ;
+    tableBodyHeight = height - tableBodyY - 120;
 
     //This updates maxScrollY based on number of flights
     maxScrollY = Math.max(0, flights.size() * rowHeight - tableBodyHeight);
@@ -81,8 +74,11 @@ class DeparturesArrivals extends Window {
     float scrollOffset = scrollY % rowHeight;
 
     // Display flights or a message if none
-    if (flights.isEmpty() && searchBar.isEmpty()) {
-      text("Enter a flight number to search.", 20, tableBodyY + 10);
+    if (flights.isEmpty()) {
+      for (Searchbar s : searchbars)
+      {
+        if (s.getSearchbarType()==SearchbarType.SEARCHBAR_FLIGHT_NUMBER && s.isEmpty()) text("Enter a flight number to search.", 20, tableBodyY + 10);
+      }
     } else if (flights.isEmpty()) {
       text("No flights found matching your search.", 20, tableBodyY + 10);
     } else {
@@ -192,31 +188,16 @@ class DeparturesArrivals extends Window {
   }
 
 
-  void filterFlights() {
-    ArrayList<Flight> filtered = new ArrayList<Flight>();
-
-    // Only filter if we have a search term
-    if (!searchBar.isEmpty()) {
-      for (Flight flight : allFlights) {
-        boolean matchesSearch = flight.flightNumber.toLowerCase().contains(searchBar.toLowerCase());
-        boolean matchesDate = selectedDate.isEmpty() || flight.date.equals(selectedDate);
-        boolean matchesTab = (selectedTab.equals("Departures") && flight.departureTime != null) ||
-          (selectedTab.equals("Arrivals") && flight.arrivalTime != null);
-
-        if (matchesSearch && matchesDate && matchesTab) {
-          filtered.add(flight);
+  void keyPressed() {
+    if (key == BACKSPACE) {
+      for (Searchbar s : searchbars)
+      {
+        if (s.getActive())
+        {
+          s.deleteLastCharacter();
+          filterFlights();
         }
       }
-    }
-
-    flights = filtered;
-    scrollY = 0; // Reset scroll position when filtering
-  }
-
-  void keyPressed() {
-    if (key == BACKSPACE && searchBar.length() > 0) {
-      searchBar = searchBar.substring(0, searchBar.length() - 1);
-      filterFlights();
     } else if (key == ENTER) {
       filterFlights();
     } else if (key == CODED) {
@@ -226,9 +207,39 @@ class DeparturesArrivals extends Window {
         scrollY += rowHeight;
       }
     } else if (key != CODED && key != BACKSPACE && key != ENTER) {
-      searchBar += key;
-      filterFlights(); // Filter flights as the user types
+      for (Searchbar s : searchbars)
+      {
+        if (s.getActive())
+        {
+          s.addCharacter(key);
+          filterFlights();
+        }
+      }
     }
+  }
+
+  void filterFlights()
+  {
+    ArrayList<Flight> filtered = new ArrayList<Flight>();
+    // Only filter if we have a search term
+    for (Flight flight : allFlights) {
+      boolean matchesSearch = false;
+      boolean matchesDate = false;
+      for(Searchbar s : searchbars)
+      {
+        if(s.getSearchbarType() == SearchbarType.SEARCHBAR_FLIGHT_NUMBER) matchesSearch = flight.flightNumber.toLowerCase().contains(s.getText());
+        if(s.getSearchbarType() == SearchbarType.SEARCHBAR_DATE) matchesDate = s.isEmpty() || flight.date.toLowerCase().contains(s.getText());
+      }
+      
+      boolean matchesTab = (selectedTab.equals("Departures") && flight.departureTime != null) ||
+        (selectedTab.equals("Arrivals") && flight.arrivalTime != null);
+
+      if (matchesSearch && matchesDate && matchesTab) {
+        filtered.add(flight);
+      }
+    }
+    flights = filtered;
+    scrollY = 0; // Reset scroll position when filtering
   }
 
   void mouseWheel(MouseEvent event) {
@@ -242,14 +253,27 @@ class DeparturesArrivals extends Window {
     return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
   }
 
-void mousePressed(int mx, int my) {
+  void mousePressed(int mx, int my) {
     if (!isVisible) return;
+
+    //Check searchbar hitboxes.
+    for (Searchbar s : searchbars)
+    {
+      if (s.mouseWithinHitbox())
+      {
+        s.setActive(!s.getActive());
+        for (Searchbar s2 : searchbars)
+        {
+          if (s != s2) s2.setActive(false); // No more than one searchbar can be active at once.
+        }
+      }
+    }
 
     int scrollBarX = 2 * width / 3 - 130;
     int scrollTrackY = tableBodyY;
 
     if (mx >= scrollBarX && mx <= scrollBarX + SCROLLBAR_WIDTH &&
-        my >= scrollTrackY && my <= scrollTrackY + tableBodyHeight) {
+      my >= scrollTrackY && my <= scrollTrackY + tableBodyHeight) {
 
       if (my >= thumbY && my <= thumbY + thumbHeight) {
         isDraggingThumb = true;
@@ -261,7 +285,6 @@ void mousePressed(int mx, int my) {
         float clickPos = (newThumbY - tableBodyY) / (float) tableBodyHeight;
         scrollY = (int) (clickPos * maxScrollY);
         scrollY = constrain(scrollY, 0, maxScrollY);
-
       } else {
         // Clicked on track but not on thumb - jump to that position
         float clickPos = (my - scrollTrackY) / (float) tableBodyHeight;
