@@ -1,4 +1,5 @@
 PImage image, icon; //<>// //<>// //<>//
+PImage[] intro = new PImage[3];
 PFont boldFont, font;
 ArrayList<Button> stateButtons = new ArrayList<Button>();
 ArrayList<Flight> dataList = new ArrayList<Flight>();
@@ -18,16 +19,19 @@ boolean blockInteractions = false;
 ArrayList<Searchbar> searchbars = new ArrayList<Searchbar>();
 ArrayList<Airport> airports = new ArrayList<Airport>();
 CheckBox sortCitiesCheckBox;
+boolean loading = true;
+int[] introVar = new int[4];
+String dotsIntro = "";
 
 void setup() {
   fullScreen(); // Main screen size
 
-  boldFont = createFont("cambriab.ttf", 23.5);
-  font = createFont("cambria.ttf", 23.5);
+  boldFont = createFont("text/cambriab.ttf", 23.5);
+  font = createFont("text/cambria.ttf", 23.5);
 
-  image = loadImage("Map.png");
+  image = loadImage("images/Map.png");
   image.resize(width, height);
-  icon = loadImage("airplane.png");
+  icon = loadImage("images/airplane.png");
   icon.resize(50, 50);
 
   for (State s : State.values())
@@ -70,68 +74,72 @@ void setup() {
 }
 
 void draw() {
-
-  image(image, 0, 0);
-  for (City city : cities) {
-    if (!blockInteractions)
-      city.checkHover(mouseX, mouseY);
-    city.run();
-  }
-  for (Button b : stateButtons) {
-    if (!blockInteractions)
-      b.mouseWithinHitbox();
-    b.display2();
-  }
-  for (City city : cities) {
-    if (city.isHovered) {
-      city.drawLabel();  // Draw label only if the city is hovered
+  if(loading)
+  {
+    loadingScreen();
+  }else{
+    image(image, 0, 0);
+    for (City city : cities) {
+      if (!blockInteractions)
+        city.checkHover(mouseX, mouseY);
+      city.run();
     }
+    for (Button b : stateButtons) {
+      if (!blockInteractions)
+        b.mouseWithinHitbox();
+      b.display2();
+    }
+    for (City city : cities) {
+      if (city.isHovered) {
+        city.drawLabel();  // Draw label only if the city is hovered
+      }
+    }
+  
+    fill(181, 233, 238);
+    noStroke();
+    rect(4, 0, width - 8, 40);
+  
+    statisticsTab.draw();
+    aboutTab.draw();
+    image(icon, 10, 3);
+  
+    if (statisticsWindow.isVisible) {
+      statisticsWindow.display();
+      statisticsWindow.checkHover(mouseX, mouseY);
+    }
+  
+    if (aboutWindow.isVisible) {
+      aboutWindow.display();
+      aboutWindow.checkHover(mouseX, mouseY);
+    }
+  
+    if (mainMenu.isVisible) {
+      mainMenu.checkHover(mouseX, mouseY);
+      mainMenu.checkButtonHover(mouseX, mouseY);
+      mainMenu.display();
+    }
+  
+  
+    if (departuresArrivals.isVisible) {
+      departuresArrivals.checkHover(mouseX, mouseY);
+      departuresArrivals.display();
+    }
+  
+    statisticsTab.checkHover(mouseX, mouseY);
+    aboutTab.checkHover(mouseX, mouseY);
+  
+    if (topWindow.equals("Statistics") && statisticsWindow.isVisible) {
+      statisticsWindow.display();
+      statisticsWindow.checkHover(mouseX, mouseY);
+    }
+  
+    if (topWindow.equals("About") && aboutWindow.isVisible) {
+      aboutWindow.display();
+      aboutWindow.checkHover(mouseX, mouseY);
+    }
+    closeButton.display();
+    closeButton.checkHover(mouseX, mouseY);
   }
-
-  fill(181, 233, 238);
-  noStroke();
-  rect(4, 0, width - 8, 40);
-
-  statisticsTab.draw();
-  aboutTab.draw();
-  image(icon, 10, 3);
-
-  if (statisticsWindow.isVisible) {
-    statisticsWindow.display();
-    statisticsWindow.checkHover(mouseX, mouseY);
-  }
-
-  if (aboutWindow.isVisible) {
-    aboutWindow.display();
-    aboutWindow.checkHover(mouseX, mouseY);
-  }
-
-  if (mainMenu.isVisible) {
-    mainMenu.checkHover(mouseX, mouseY);
-    mainMenu.checkButtonHover(mouseX, mouseY);
-    mainMenu.display();
-  }
-
-
-  if (departuresArrivals.isVisible) {
-    departuresArrivals.checkHover(mouseX, mouseY);
-    departuresArrivals.display();
-  }
-
-  statisticsTab.checkHover(mouseX, mouseY);
-  aboutTab.checkHover(mouseX, mouseY);
-
-  if (topWindow.equals("Statistics") && statisticsWindow.isVisible) {
-    statisticsWindow.display();
-    statisticsWindow.checkHover(mouseX, mouseY);
-  }
-
-  if (topWindow.equals("About") && aboutWindow.isVisible) {
-    aboutWindow.display();
-    aboutWindow.checkHover(mouseX, mouseY);
-  }
-  closeButton.display();
-  closeButton.checkHover(mouseX, mouseY);
 }
 
 
