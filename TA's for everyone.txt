@@ -5,23 +5,17 @@ The user can select the specific airport or they can search for the specific fli
 When we click on the airport, we have a window with tabs, the first shown tab is departures, the second tab that can be selected is arrivals.
 
 Things that we have to do:
-+get the menu
-+separate data for each state
-+find the clear U.S map to put the state names there
-+connect the menu to the state (state is a buton with a name)  (data)
-+create the tabs and window for the airport selected
-+create buttons for each state
-+stats
 
 MacColins + class statistics (histogram)
-          - Optimization with data loading
           + intro
 
 Veronika + get the menu for flights int the state
          + create the tabs and window for the airport selected (departures and arrivals)
          + connect the menu to the state (state is a buton with a name)  (data)
          + A bit more colour to the project, colour the windows
-         - colour the map regarding the amount of airports in state
+         + colour the map regarding the amount of airports in state
+         + Add something to main menu
+         + Optimization with data loading
 
 Amy      + filter by dates, lateness, and allow the user to input a flight number and implement a scroll down button to see more of the flights
          + More user friendly interface
@@ -36,5 +30,3 @@ Stephen  + find the clear U.S. map
 Tommy    + create buttons for each state
          + Search for date, 22/01/2022, 22 January
          
-
-- Add something to main menu
