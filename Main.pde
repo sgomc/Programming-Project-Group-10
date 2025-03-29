@@ -30,17 +30,17 @@ ArrayList<Flight> allFlights = new ArrayList<Flight>();
 boolean loading = true;
 int[] introVar = new int[4];
 String dotsIntro = "";
-
+Table table;
 
 void setup() {
   fullScreen(); // Main screen size
 
-  boldFont = createFont("cambriab.ttf", 23.5);
-  font = createFont("cambria.ttf", 23.5);
+  boldFont = createFont("text/cambriab.ttf", 23.5);
+  font = createFont("text/cambria.ttf", 23.5);
 
-  image = loadImage("Map.png");
+  image = loadImage("images/Map.png");
   image.resize(width, height);
-  icon = loadImage("airplane.png");
+  icon = loadImage("images/airplane.png");
   icon.resize(50, 50);
 
   for (State s : State.values())
@@ -318,6 +318,7 @@ void mouseDragged() {
 }
 
 void loadFlights() {
+  table = loadTable("flights_full.csv", "header");
   String[] lines = loadStrings("flights_full.csv");
   if (lines == null) {
     println("Error: File not found!");
