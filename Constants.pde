@@ -1,0 +1,69 @@
+static final int BUTTON_TEXT_SIZE = 28;
+final color DEFAULT_TEXT_COLOR = color(0);
+final color HIGHLIGHTED_TEXT_COLOR = color(255);
+
+enum State
+{
+  ALABAMA,
+    ALASKA,
+    ARIZONA,
+    ARKANSAS,
+    CALIFORNIA,
+    COLORADO,
+    CONNECTICUT,
+    DELAWARE,
+    FLORIDA,
+    GEORGIA,
+    HAWAII,
+    IDAHO,
+    ILLINOIS,
+    INDIANA,
+    IOWA,
+    KANSAS,
+    KENTUCKY,
+    LOUISIANA,
+    MAINE,
+    MARYLAND,
+    MASSACHUSETTS,
+    MICHIGAN,
+    MINNESOTA,
+    MISSISSIPI,
+    MISSOURI,
+    MONTANA,
+    NEBRASKA,
+    NEVADA,
+    NEW_HAMPSHIRE,
+    NEW_JERSEY,
+    NEW_MEXICO,
+    NEW_YORK,
+    NORTH_CAROLINA,
+    NORTH_DAKOTA,
+    OHIO,
+    OKLAHOMA,
+    OREGON,
+    PENNSYLVANIA,
+    RHODE_ISLAND,
+    SOUTH_CAROLINA,
+    SOUTH_DAKOTA,
+    TENNESEE,
+    TEXAS,
+    UTAH,
+    VERMONT,
+    VIRGINIA,
+    WASHINGTON,
+    WEST_VIRGINIA,
+    WISCONSIN,
+    WYOMING,
+    PUERTO_RICO,
+    GUAM,
+    SAMOA,
+    SAIPAN,
+    VIRGIN_ISLANDS
+}
+
+
+enum SearchbarType
+{
+  SEARCHBAR_FLIGHT_NUMBER,
+    SEARCHBAR_DATE,
+}
