@@ -9,15 +9,12 @@ class AboutWindow extends Window {
 
     pushMatrix();
     translate(x, y);  // Move the coordinate system to the window's position
-    fill(240, 236, 255);
-    rect(0, 0, w, h);
 
     // Display Content
     fill(0);
     textSize(18);
     textAlign(LEFT, TOP);
     text("About Content", 20, 50);
-    closeButton.display();
     popMatrix();
   }
 }

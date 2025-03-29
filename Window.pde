@@ -43,14 +43,9 @@ class Window {
 
     if (closeButton.checkClick(relativeX, relativeY)) {
       isVisible = false;
-      sortCitiesCheckBox.isChecked = false;
       closeButton.wasClicked = false;
       for (Button stateButton : stateButtons) {
         stateButton.setActive(false);  // Set the active button for the current state
-      }
-      for (Searchbar s : searchbars) {
-        s.setActive(false);
-        s.searchbarText = ""; // Clear the search text
       }
     }
   }
