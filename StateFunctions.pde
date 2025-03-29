@@ -37,7 +37,7 @@ float getStateX(State state)
     return 0.105;
   case COLORADO:
     return 0.356;
-  case CONNETICUT:
+  case CONNECTICUT:
     return 0.9145;
   case DELAWARE:
     return 0.884;
@@ -65,7 +65,7 @@ float getStateX(State state)
     return 0.942;
   case MARYLAND:
     return 0.864;
-  case MASSACHUSSETS:
+  case MASSACHUSETTS:
     return 0.915;
   case MICHIGAN:
     return 0.716;
@@ -156,7 +156,7 @@ float getStateY(State state)
     return 0.514;
   case COLORADO:
     return 0.487;
-  case CONNETICUT:
+  case CONNECTICUT:
     return 0.282;
   case DELAWARE:
     return 0.383;
@@ -184,7 +184,7 @@ float getStateY(State state)
     return 0.12;
   case MARYLAND:
     return 0.395;
-  case MASSACHUSSETS:
+  case MASSACHUSETTS:
     return 0.252;
   case MICHIGAN:
     return 0.319;
@@ -207,7 +207,7 @@ float getStateY(State state)
   case NEW_MEXICO:
     return 0.643;
   case NEW_YORK:
-    return 0.285;
+    return 0.282;
   case NORTH_CAROLINA:
     return 0.533;
   case NORTH_DAKOTA:
@@ -223,7 +223,7 @@ float getStateY(State state)
   case RHODE_ISLAND:
     return 0.268;
   case SOUTH_CAROLINA:
-    return 0.590;
+    return 0.585;
   case SOUTH_DAKOTA:
     return 0.322;
   case TENNESEE:
@@ -257,4 +257,65 @@ float getStateY(State state)
   default:
     return 0;
   }
+}
+
+String getStateAbbreviation(String name) {
+    switch (name) {
+        case "Alabama": return "AL";
+        case "Alaska": return "AK";
+        case "Arizona": return "AZ";
+        case "Arkansas": return "AR";
+        case "California": return "CA";
+        case "Colorado": return "CO";
+        case "Connecticut": return "CT";
+        case "Delaware": return "DE";
+        case "Florida": return "FL";
+        case "Georgia": return "GA";
+        case "Hawaii": return "HI";
+        case "Idaho": return "ID";
+        case "Illinois": return "IL";
+        case "Indiana": return "IN";
+        case "Iowa": return "IA";
+        case "Kansas": return "KS";
+        case "Kentucky": return "KY";
+        case "Louisiana": return "LA";
+        case "Maine": return "ME";
+        case "Maryland": return "MD";
+        case "Massachusetts": return "MA";
+        case "Michigan": return "MI";
+        case "Minnesota": return "MN";
+        case "Mississipi": return "MS";
+        case "Missouri": return "MO";
+        case "Montana": return "MT";
+        case "Nebraska": return "NE";
+        case "Nevada": return "NV";
+        case "New Hampshire": return "NH";
+        case "New Jersey": return "NJ";
+        case "New Mexico": return "NM";
+        case "New York": return "NY";
+        case "North Carolina": return "NC";
+        case "North Dakota": return "ND";
+        case "Ohio": return "OH";
+        case "Oklahoma": return "OK";
+        case "Oregon": return "OR";
+        case "Pennsylvania": return "PA";
+        case "Puerto Rico": return "PR";
+        case "Rhode Island": return "RI";
+        case "South Carolina": return "SC";
+        case "South Dakota": return "SD";
+        case "Tennesee": return "TN";
+        case "Texas": return "TX";
+        case "Utah": return "UT";
+        case "Virginia": return "VA";
+        case "Virgin Islands": return "VI";
+        case "Washington": return "WA";
+        case "West Virginia": return "WV";
+        case "Wisconsin": return "WI";
+        case "Wyoming": return "WY";
+        case "Guam": return "TT";
+        case "Samoa": return "TT";
+        case "Saipan": return "TT";
+        case "Vermont": return "VT";
+        default: return "";
+    }
 }

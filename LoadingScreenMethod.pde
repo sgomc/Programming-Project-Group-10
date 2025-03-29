@@ -46,10 +46,10 @@ void loadingScreen()
       
       if(introVar[2]%20 == 0)
       {
-        s += ".";
-        if(s.length() > 3) s = "";
+        dotsIntro += ".";
+        if(dotsIntro.length() > 3) dotsIntro = "";
       }
-      text("loading"+s, width/2-300, height/2+500);
+      text("loading"+dotsIntro, width/2-300, height/2+500);
       if(introVar[2] >= duration-56)
       {
         introVar[3] -= 5;

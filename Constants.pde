@@ -1,4 +1,4 @@
-static final int BUTTON_TEXT_SIZE = 24;
+static final int BUTTON_TEXT_SIZE = 28;
 final color DEFAULT_TEXT_COLOR = color(0);
 final color HIGHLIGHTED_TEXT_COLOR = color(255);
 
@@ -10,7 +10,7 @@ enum State
     ARKANSAS,
     CALIFORNIA,
     COLORADO,
-    CONNETICUT,
+    CONNECTICUT,
     DELAWARE,
     FLORIDA,
     GEORGIA,
@@ -24,7 +24,7 @@ enum State
     LOUISIANA,
     MAINE,
     MARYLAND,
-    MASSACHUSSETS,
+    MASSACHUSETTS,
     MICHIGAN,
     MINNESOTA,
     MISSISSIPI,
@@ -59,4 +59,11 @@ enum State
     SAMOA,
     SAIPAN,
     VIRGIN_ISLANDS
+}
+
+
+enum SearchbarType
+{
+  SEARCHBAR_FLIGHT_NUMBER,
+    SEARCHBAR_DATE,
 }

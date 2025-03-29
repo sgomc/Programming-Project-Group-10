@@ -4,10 +4,11 @@ class Button {
   boolean isHovered = false;
   boolean isHoveredStates = false;
   boolean hasBackground = true; // Whether to show background when not hovered
-  color bgColor = color(220); // Default background color
-  color hoverColor = color(200, 220, 255); // Default hover color
-  color textColor = color(0); // Default text color
-  color hoverTextColor = color(0); // Default hover text color
+  color bgColor = color(200, 220, 255); // Default background color
+  color hoverColor = color(175, 235, 245); // Default hover color
+  color textColorStates = color(0, 5, 24); // Default text color
+  color hoverTextColor, textColor = color(0); // Default hover text color
+  color hoverTextColorStates = color(40, 95, 255); // Default hover text color
   boolean wasClicked = false;
   boolean isActive = false;
   State state;
@@ -93,21 +94,30 @@ class Button {
     textAlign(CENTER, CENTER);
     rectMode(CENTER);
 
+    textFont(boldFont);
+
+    // Only change the text color when hovering
     if (isHoveredStates) {
-      fill(hoverColor);
+      fill(hoverTextColorStates); // Change text color on hover
     } else {
-      noFill();
+      fill(textColorStates); // Default text color
     }
+
+    // No background fill, just show the button boundary lightly
+    noFill();
+
     if (isActive) {
-      stroke(0);  // Apply stroke for the active button
+      strokeWeight(2);
+      stroke(hoverTextColorStates);  // Apply stroke for the active button
     } else {
       noStroke();  // No stroke for other buttons
     }
 
-
     rect(x, y, w, h); // Show button boundary lightly
-    fill(textColor);
+
+    // Draw the button text
     text(label, x, y, w, h);
+
     popStyle();
   }
 

@@ -1,5 +1,6 @@
-PImage image; //<>//
+PImage image, icon; //<>// //<>// //<>//
 PImage[] intro = new PImage[3];
+PFont boldFont, font;
 ArrayList<Button> stateButtons = new ArrayList<Button>();
 ArrayList<Flight> dataList = new ArrayList<Flight>();
 ArrayList<Flight> filteredList = new ArrayList<Flight>();
@@ -14,21 +15,29 @@ String searchBar = "";
 ArrayList<City> cities = new ArrayList<City>();
 boolean isDraggingScroll = false;
 float scrollThumbY = 0;
+boolean blockInteractions = false;
+ArrayList<Searchbar> searchbars = new ArrayList<Searchbar>();
+ArrayList<Airport> airports = new ArrayList<Airport>();
+CheckBox sortCitiesCheckBox;
 boolean loading = true;
 int[] introVar = new int[4];
-String s = ".";
+String dotsIntro = "";
+
 void setup() {
-  //size(1600, 900);
   fullScreen(); // Main screen size
-  background(0);
-  
-  image = loadImage("USA_map3.png");
+
+  boldFont = createFont("text/cambriab.ttf", 23.5);
+  font = createFont("text/cambria.ttf", 23.5);
+
+  image = loadImage("images/Map.png");
   image.resize(width, height);
+  icon = loadImage("images/airplane.png");
+  icon.resize(50, 50);
 
   for (State s : State.values())
   {
-    if (getStateName(s).equals("Vermont") || getStateName(s).equals("New Hampshire") || getStateName(s).equals("Massachussets") || getStateName(s).equals("Rhode Island")
-      || getStateName(s).equals("Conneticut") || getStateName(s).equals("New Jersey") || getStateName(s).equals("Delaware") || getStateName(s).equals("Maryland")
+    if (getStateName(s).equals("Vermont") || getStateName(s).equals("New Hampshire") || getStateName(s).equals("Massachusetts") || getStateName(s).equals("Rhode Island")
+      || getStateName(s).equals("Connecticut") || getStateName(s).equals("New Jersey") || getStateName(s).equals("Delaware") || getStateName(s).equals("Maryland")
       || getStateName(s).equals("West Virginia") || getStateName(s).equals("Hawaii") || getStateName(s).equals("Guam") || getStateName(s).equals("Samoa")
       || getStateName(s).equals("Saipan") || getStateName(s).equals("Virgin Islands")) {
       City city = new City(getStateX(s), getStateY(s), getStateName(s));
@@ -48,8 +57,8 @@ void setup() {
   departuresArrivals.isVisible = false;
 
   // Initialize Tabs
-  statisticsTab = new Tab(4, 0, 100, 40, "Statistics", false);
-  aboutTab = new Tab(104, 0, 100, 40, "About", false);
+  statisticsTab = new Tab(69, 0, 100, 45, "Statistics", false);
+  aboutTab = new Tab(179, 0, 100, 45, "About", false);
   statisticsWindow = new StatisticsWindow(4, 50, width - 8, height - 54);
   statisticsWindow.isVisible = false;
   aboutWindow = new AboutWindow(4, 50, width - 8, height - 54);
@@ -60,99 +69,85 @@ void setup() {
   closeButton.hoverColor = color(255, 0, 0); // Red when hovered
   closeButton.textColor = color(0); // Black X
   closeButton.hoverTextColor = color(255); // White X when hovered
+
+  sortCitiesCheckBox = new CheckBox(280, 90, 20, 20, "Sort Cities Alphabetically");
 }
 
 void draw() {
-  background(200);
   if(loading)
   {
     loadingScreen();
   }else{
-  image(image, 0, 0);
-
+    image(image, 0, 0);
+    for (City city : cities) {
+      if (!blockInteractions)
+        city.checkHover(mouseX, mouseY);
+      city.run();
+    }
+    for (Button b : stateButtons) {
+      if (!blockInteractions)
+        b.mouseWithinHitbox();
+      b.display2();
+    }
+    for (City city : cities) {
+      if (city.isHovered) {
+        city.drawLabel();  // Draw label only if the city is hovered
+      }
+    }
   
-  for (City city : cities) {
-    city.checkHover(mouseX, mouseY);
-    city.draw();
-  }
-
-  //washington.draw();
-  for (Button b : stateButtons) {
-    b.display2();  // First, draw the buttons
-  }
-
-  for (Button b : stateButtons) {
-    b.mouseWithinHitbox();
-  }
-
-  fill(255);
-  noStroke();
-  rect(4, 0, width - 8, 40);
-
-  statisticsTab.draw();
-  aboutTab.draw();
-
-  if (statisticsWindow.isVisible) {
-    statisticsWindow.display();
-    statisticsWindow.checkHover(mouseX, mouseY);
-  }
-
-  if (aboutWindow.isVisible) {
-    aboutWindow.display();
-    aboutWindow.checkHover(mouseX, mouseY);
-  }
-
-  if (mainMenu.isVisible) {
-    mainMenu.checkHover(mouseX, mouseY);
-    mainMenu.checkButtonHover(mouseX, mouseY);
-    mainMenu.display();
-  }
-
-
-  if (departuresArrivals.isVisible) {
-    departuresArrivals.checkHover(mouseX, mouseY);
-    departuresArrivals.display();
-  }
-
-
-  if (topWindow.equals("Statistics") && statisticsWindow.isVisible) {
-    statisticsWindow.display();
-    statisticsWindow.checkHover(mouseX, mouseY);
-  }
-
-  if (topWindow.equals("About") && aboutWindow.isVisible) {
-    aboutWindow.display(); //<>//
-    aboutWindow.checkHover(mouseX, mouseY);
-  }
-  closeButton.display();
-  closeButton.checkHover(mouseX, mouseY);
+    fill(181, 233, 238);
+    noStroke();
+    rect(4, 0, width - 8, 40);
+  
+    statisticsTab.draw();
+    aboutTab.draw();
+    image(icon, 10, 3);
+  
+    if (statisticsWindow.isVisible) {
+      statisticsWindow.display();
+      statisticsWindow.checkHover(mouseX, mouseY);
+    }
+  
+    if (aboutWindow.isVisible) {
+      aboutWindow.display();
+      aboutWindow.checkHover(mouseX, mouseY);
+    }
+  
+    if (mainMenu.isVisible) {
+      mainMenu.checkHover(mouseX, mouseY);
+      mainMenu.checkButtonHover(mouseX, mouseY);
+      mainMenu.display();
+    }
+  
+  
+    if (departuresArrivals.isVisible) {
+      departuresArrivals.checkHover(mouseX, mouseY);
+      departuresArrivals.display();
+    }
+  
+    statisticsTab.checkHover(mouseX, mouseY);
+    aboutTab.checkHover(mouseX, mouseY);
+  
+    if (topWindow.equals("Statistics") && statisticsWindow.isVisible) {
+      statisticsWindow.display();
+      statisticsWindow.checkHover(mouseX, mouseY);
+    }
+  
+    if (topWindow.equals("About") && aboutWindow.isVisible) {
+      aboutWindow.display();
+      aboutWindow.checkHover(mouseX, mouseY);
+    }
+    closeButton.display();
+    closeButton.checkHover(mouseX, mouseY);
   }
 }
 
 
 void mousePressed() {
 
+  blockInteractions = departuresArrivals.isVisible || statisticsWindow.isVisible || aboutWindow.isVisible;
+
   boolean stateButtonClicked = false;
-
-  // Check if any state button was clicked
-  for (Button stateButton : stateButtons) {
-    if (stateButton.checkClickStates()) {
-      println("State button clicked: " + stateButton.label);
-
-      // Open the menu for the selected state
-      mainMenu.openForState(stateButton.state);  // Set the current state
-      stateButtonClicked = true;
-      break;
-    }
-  }
-  for (City city : cities) {
-    if (city.checkClick(mouseX, mouseY)) {
-      println("City clicked: " + city.label);
-      String formattedCityName = city.label.replace(" ", "_").toUpperCase();
-      mainMenu.openForState(State.valueOf(formattedCityName));  // Set the current state for the city
-      break;
-    }
-  }
 
   //Only check other buttons if no state button was clicked
   if (!stateButtonClicked) {
@@ -165,12 +160,15 @@ void mousePressed() {
       mainMenu.checkButtonClick(mouseX, mouseY);
     }
   }
+  mainMenu.mousePressed(mouseX, mouseY);
+
 
   if (departuresArrivals.isVisible)
   {
     departuresArrivals.checkClose(mouseX, mouseY);
     departuresArrivals.checkTabClick(mouseX, mouseY);
   }
+
   if (statisticsTab.isClicked(mouseX, mouseY)) {
     statisticsTab.isSelected = true;
     aboutTab.isSelected = false;
@@ -200,6 +198,32 @@ void mousePressed() {
   }
   departuresArrivals.mousePressed(mouseX, mouseY);
 
+  if (!departuresArrivals.isVisible && !statisticsWindow.isVisible && !aboutWindow.isVisible)
+    blockInteractions = false;
+
+  if (blockInteractions) return;
+
+  // Check if any state button was clicked
+  for (Button stateButton : stateButtons) {
+    if (stateButton.checkClickStates()) {
+      println("State button clicked: " + stateButton.label);
+
+      // Open the menu for the selected state
+      mainMenu.openForState(stateButton.state);  // Set the current state
+      mainMenu.getAirportsForCurrentState();
+      stateButtonClicked = true;
+      break;
+    }
+  }
+  for (City city : cities) {
+    if (city.checkClick(mouseX, mouseY)) {
+      println("City clicked: " + city.label);
+      String formattedCityName = city.label.replace(" ", "_").toUpperCase();
+      mainMenu.openForState(State.valueOf(formattedCityName));  // Set the current state for the city
+      mainMenu.getAirportsForCurrentState();
+      break;
+    }
+  }
 }
 void mouseReleased() {
   for (Button b : stateButtons) {
@@ -211,6 +235,7 @@ void mouseReleased() {
     city.wasClicked = false;
   }
   departuresArrivals.mouseReleased();
+  mainMenu.mouseReleased();
 }
 
 void loadData() {
@@ -248,7 +273,6 @@ void displaySearchBar() {
 void printData() {
   textAlign(CENTER);
   int y = height / 2;
-
   fill(50);
   textSize(18);
   for (Flight flight : dataList) {
@@ -256,7 +280,6 @@ void printData() {
     y += 30;  //space out lines
   }
 }
-
 
 void keyPressed() {
   if (departuresArrivals.isVisible) {
@@ -269,8 +292,12 @@ void mouseWheel(MouseEvent event) {
   if (departuresArrivals.isVisible) {
     departuresArrivals.mouseWheel(event);
   }
+  if (mainMenu.isVisible) {
+    mainMenu.mouseWheel(event);
+  }
 }
 
 void mouseDragged() {
   departuresArrivals.mouseDragged(mouseY);
+  mainMenu.mouseDragged(mouseY);
 }
