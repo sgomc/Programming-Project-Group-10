@@ -25,12 +25,12 @@ int[] introVar = new int[4];
 void setup() {
   fullScreen(); // Main screen size
 
-  boldFont = createFont("cambriab.ttf", 23.5);
-  font = createFont("cambria.ttf", 23.5);
+  boldFont = createFont("text/cambriab.ttf", 23.5);
+  font = createFont("text/cambria.ttf", 23.5);
 
-  image = loadImage("Map.png");
+  image = loadImage("images/Map.png");
   image.resize(width, height);
-  icon = loadImage("airplane.png");
+  icon = loadImage("images/airplane.png");
   icon.resize(50, 50);
 
   for (State s : State.values())
