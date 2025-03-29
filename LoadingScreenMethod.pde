@@ -5,7 +5,7 @@ void loadingScreen()
 
   fill(0, 408, 612, 816);
  
-  textFont(createFont("PressStart2P-Regular.ttf", 32));
+  textFont(createFont("text/PressStart2P-Regular.ttf", 32));
   textSize(128);
   
   int duration = 7*60;
@@ -23,12 +23,12 @@ void loadingScreen()
   }
   if(introVar[2]++ <= duration)
   {
-    if(introVar[1] < 10  && frameCount %2 !=0 && frameCount %3 !=0) intro[0] = loadImage("frame_0"+introVar[1]+++"_delay-0.09s.gif");
-    if(introVar[1] >=10 &&frameCount %2 !=0 && frameCount %3 !=0) intro[0] = loadImage("frame_"+introVar[1]+++"_delay-0.09s.gif");
+    if(introVar[1] < 10  && frameCount %2 !=0 && frameCount %3 !=0) intro[0] = loadImage("stars/frame_0"+introVar[1]+++"_delay-0.09s.gif");
+    if(introVar[1] >=10 &&frameCount %2 !=0 && frameCount %3 !=0) intro[0] = loadImage("stars/frame_"+introVar[1]+++"_delay-0.09s.gif");
     if(introVar[1] > 39 ) introVar[1] = 0;
     
-    if(introVar[0] < 10  && frameCount %2 !=0 && frameCount %3 !=0) intro[1] = loadImage("frame_0"+introVar[0]+++"_delay-0.17s.gif");
-    if(introVar[0] >=10 &&frameCount %2 !=0 && frameCount %3 !=0) intro[1] = loadImage("frame_"+introVar[0]+++"_delay-0.17s.gif");
+    if(introVar[0] < 10  && frameCount %2 !=0 && frameCount %3 !=0) intro[1] = loadImage("earth/frame_0"+introVar[0]+++"_delay-0.17s.gif");
+    if(introVar[0] >=10 &&frameCount %2 !=0 && frameCount %3 !=0) intro[1] = loadImage("earth/frame_"+introVar[0]+++"_delay-0.17s.gif");
     if(introVar[0] > 59 ) introVar[0] = 0;
     intro[0].resize(width,height);
     image(intro[0],0,0);
@@ -64,7 +64,7 @@ void loadingScreen()
     loading = false;
   }
  
-  textFont(loadFont("ArialMT-48.vlw"));
+  textFont(loadFont("text/ArialMT-48.vlw"));
   
   
 }
