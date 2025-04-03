@@ -200,7 +200,10 @@ void draw() {
     closeButton.checkHover(mouseX, mouseY);
   }
   
+  
+  //draw plane animation over everything else
   if(boeing.isVisible){
+    image(image, 0, 0);
     boeing.fly();
     boeing.draw();
   }
@@ -316,6 +319,12 @@ void keyPressed() {
     println("Key pressed: " + key);
     departuresArrivals.keyPressed(); //forwarding key events to DeparturesArrivals v of keyPressed()
   }
+  
+  /*testing
+  if (key == '#'){
+    boeing.reset("SPN","JFK");
+  }
+  */
 }
 
 void mouseWheel(MouseEvent event) {
@@ -371,6 +380,7 @@ void loadFlights() {
         crsDepTime,
         crsArrTime,
         destination,
+        origin,
         date,
         originState,
         destState,

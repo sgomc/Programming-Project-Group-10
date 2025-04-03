@@ -87,21 +87,17 @@ class Plane{
   }
   
   void fly(){
-    if (timer==0){
-      planeFly.play(3.5); //rate, pos, amp, add, cue
-      planeFly.amp(.2); //volume
-      
-    }
   
      if (timer < framerate*travelTime) {
        //x = originX + ((timer/(framerate*4)) * (destX - originX));
        //y = originY + ((timer/(framerate*4)) * (destY - originY));
        //println(x + " " + y);
        //x+=(destX - originX)/(framerate*travelTime);
-       y-=distance/(framerate*travelTime);
+       y-=distance/(framerate*travelTime);              //when the plane has been rotated the direction to the destination airport is just -y
        
      }
-    
+     
+    // disappear after traveltime + x seconds
     if(timer > framerate*(travelTime+1)){
       isVisible=false;
     
@@ -112,13 +108,15 @@ class Plane{
   
   void draw(){
     
-    println("angle " + angle);
-    
+    //println("angle " + angle); //testing
+    //line(originX, originY, destX, destY);
+    imageMode(CENTER);
     pushMatrix();
     translate(originX, originY);
     rotate(angle);
     image(plane, x, y);
     popMatrix();
+    imageMode(CORNER);
 
   }
   
@@ -144,8 +142,15 @@ class Plane{
     
     timer=0;
     
-    angle=atan2(-this.originY+this.destY,-this.originX+this.destX)+HALF_PI;
-    distance=sqrt((this.destX-this.originX)*(this.destX-this.originX) + (this.destY-this.originY)*(this.destY-this.originY));
+    angle=atan2(-this.originY+this.destY,-this.originX+this.destX)+HALF_PI;         // calculate angle between origin and dest airports                                             
+    distance=sqrt((this.destX-this.originX)*(this.destX-this.originX) +             // pythagoras to get the absolute distance between the airports
+    (this.destY-this.originY)*(this.destY-this.originY));
+    
+    //audio
+    planeFly.play(3.5); //rate, pos, amp, add, cue
+    planeFly.amp(.1); //volume
+    
+  
   
   
   }
