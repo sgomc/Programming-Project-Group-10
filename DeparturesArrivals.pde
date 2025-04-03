@@ -40,7 +40,7 @@ class DeparturesArrivals extends Window {
     onTimeFlightsRadio = new RadioButton(x + 540, y + 130, 120, 20, "On Time Only", delayFilter.equals("OnTime"));
     
     //Plane button
-    showPlaneButton = new Button(x + 740, y + 120, 140, 30, "Show Plane");
+    showPlaneButton = new Button(x + 740, y + 120, 140, 30, "Show Top Flight");
 
     flights.clear();
     flightsPerPage = (h - tableStartY - 30) / rowHeight;
@@ -68,7 +68,7 @@ class DeparturesArrivals extends Window {
     onTimeFlightsRadio.draw();
     
     showPlaneButton.display();
-    if(showPlaneButton.checkClick(mouseX,mouseY) && flights.size()>=0){
+    if(showPlaneButton.checkClick(mouseX,mouseY) && flights.size()>0){
       boeing.reset(flights.get(0).origin,flights.get(0).destination);
       showPlaneButton.wasClicked = false;
     

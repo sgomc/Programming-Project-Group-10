@@ -204,6 +204,12 @@ void draw() {
   //draw plane animation over everything else
   if(boeing.isVisible){
     image(image, 0, 0);
+    for (City city : cities) {
+      city.run();
+    }
+    for (Button b : stateButtons) {
+      b.display2();
+    }
     boeing.fly();
     boeing.draw();
   }
