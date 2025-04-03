@@ -1,5 +1,6 @@
 import java.util.HashSet; //<>// //<>//
 import java.util.HashMap;
+import processing.sound.*;
 
 PImage image, icon;
 PImage[] intro = new PImage[3];
@@ -31,6 +32,10 @@ boolean loading = true;
 int[] introVar = new int[4];
 String dotsIntro = "";
 Table table;
+PImage plane;
+final int framerate=60;
+Plane boeing;
+SoundFile planeFly;
 
 void setup() {
   fullScreen(); // Main screen size
@@ -42,6 +47,11 @@ void setup() {
   image.resize(width, height);
   icon = loadImage("images/airplane.png");
   icon.resize(50, 50);
+  
+  plane = loadImage("Plane.png");
+  plane.resize(height/15, height/15);
+  boeing = new Plane();
+  planeFly = new SoundFile(this, "airplane-lift-off-01.mp3");
 
   for (State s : State.values())
   {
@@ -189,6 +199,20 @@ void draw() {
     closeButton.display();
     closeButton.checkHover(mouseX, mouseY);
   }
+  
+  
+  //draw plane animation over everything else
+  if(boeing.isVisible){
+    image(image, 0, 0);
+    for (City city : cities) {
+      city.run();
+    }
+    for (Button b : stateButtons) {
+      b.display2();
+    }
+    boeing.fly();
+    boeing.draw();
+  }
 }
 
 
@@ -301,6 +325,12 @@ void keyPressed() {
     println("Key pressed: " + key);
     departuresArrivals.keyPressed(); //forwarding key events to DeparturesArrivals v of keyPressed()
   }
+  
+  /*testing
+  if (key == '#'){
+    boeing.reset("SPN","JFK");
+  }
+  */
 }
 
 void mouseWheel(MouseEvent event) {
@@ -356,6 +386,7 @@ void loadFlights() {
         crsDepTime,
         crsArrTime,
         destination,
+        origin,
         date,
         originState,
         destState,
