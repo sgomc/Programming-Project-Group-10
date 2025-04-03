@@ -147,8 +147,8 @@ class Plane{
     (this.destY-this.originY)*(this.destY-this.originY));
     
     //audio
-    //planeFly.play(3.5); //rate, pos, amp, add, cue
-    //planeFly.amp(.1); //volume
+    planeFly.play(3.5); //rate, pos, amp, add, cue
+    planeFly.amp(.1); //volume
     
   
   
