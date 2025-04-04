@@ -381,9 +381,15 @@ class DeparturesArrivals extends Window {
       boolean matchesDate = false;
       for (Searchbar s : searchbars) {
         if (s.getSearchbarType() == SearchbarType.SEARCHBAR_FLIGHT_NUMBER)
+        {
+          searchedFlightNumber = s.getText();
           matchesSearch = flight.flightNumber.toLowerCase().contains(s.getText().toLowerCase());
+        }
         if (s.getSearchbarType() == SearchbarType.SEARCHBAR_DATE)
+        {
           matchesDate = s.isEmpty() || flight.date.toLowerCase().contains(s.getText().toLowerCase());
+          searchedDate = s.getText();
+        }
       }
 
       boolean matchesDelayFilter = true;
