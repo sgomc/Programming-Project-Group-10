@@ -36,6 +36,10 @@ PImage plane;
 final int framerate=60;
 Plane boeing;
 SoundFile planeFly;
+String selectedTab = "Departures";
+Tab departuresTab, arrivalsTab;
+String selectedDate= "";
+State currentState;
 
 void setup() {
   fullScreen(); // Main screen size
