@@ -1,6 +1,5 @@
 class DeparturesArrivals extends Window {
   String selectedTab = "Departures";
-  Tab departuresTab, arrivalsTab;
   String selectedDate= "";
 
   State currentState;
