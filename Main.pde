@@ -38,7 +38,7 @@ Plane boeing;
 SoundFile planeFly;
 String selectedTab = "Departures";
 Tab departuresTab, arrivalsTab;
-String selectedDate= "";
+String searchedDate, searchedFlightNumber;
 State currentState;
 
 void setup() {
