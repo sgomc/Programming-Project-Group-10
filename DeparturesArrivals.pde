@@ -27,8 +27,6 @@ class DeparturesArrivals extends Window {
 
   final int DATE_COLUMN_X_NORMAL = 820; // Normal position
   final int DATE_COLUMN_X_DELAYED = 910; // Position when showing delayed flights
-  
-  Button showPlaneButton;
 
   DeparturesArrivals(int x, int y, int w, int h) {
     super(x, y, w, h);
@@ -38,9 +36,6 @@ class DeparturesArrivals extends Window {
     allFlightsRadio = new RadioButton(x + 200, y + 130, 120, 20, "All Flights", delayFilter.equals("All"));
     delayedFlightsRadio = new RadioButton(x + 370, y + 130, 120, 20, "Delayed Only", delayFilter.equals("Delayed"));
     onTimeFlightsRadio = new RadioButton(x + 540, y + 130, 120, 20, "On Time Only", delayFilter.equals("OnTime"));
-    
-    //Plane button
-    showPlaneButton = new Button(x + 740, y + 120, 140, 30, "Show Top Flight");
 
     flights.clear();
     flightsPerPage = (h - tableStartY - 30) / rowHeight;
@@ -66,13 +61,6 @@ class DeparturesArrivals extends Window {
     allFlightsRadio.draw();
     delayedFlightsRadio.draw();
     onTimeFlightsRadio.draw();
-    
-    showPlaneButton.display();
-    if(showPlaneButton.checkClick(mouseX,mouseY) && flights.size()>0){
-      boeing.reset(flights.get(0).origin,flights.get(0).destination);
-      showPlaneButton.wasClicked = false;
-    
-    }
 
     pushMatrix();
     translate(x, y);
@@ -409,6 +397,7 @@ class DeparturesArrivals extends Window {
     if (isVisible && isMouseOver()) {
       float e = event.getCount();
       scrollY += e * rowHeight;
+      return;
     }
   }
 
@@ -421,7 +410,7 @@ class DeparturesArrivals extends Window {
     checkRadioButtonClick(mx, my);
 
     int scrollBarX = 2 * width / 3 - 130;
-    int scrollTrackY = tableBodyY;
+    int scrollTrackY = tableBodyY + 90;
 
     //Check searchbar hitboxes.
     for (Searchbar s : searchbars)
@@ -439,34 +428,42 @@ class DeparturesArrivals extends Window {
     if (mx >= scrollBarX && mx <= scrollBarX + SCROLLBAR_WIDTH &&
       my >= scrollTrackY && my <= scrollTrackY + tableBodyHeight) {
 
-      if (my >= thumbY && my <= thumbY + thumbHeight) {
-        isDraggingThumb = true;
-        lastMouseY = my;
-        offsetY = my - thumbY;
+      // First update thumb position based on current scroll
+      thumbY = (tableBodyHeight - thumbHeight) * ((float)scrollY / maxScrollY);
 
-        // Immediately update thumbY to the click position
-        float newThumbY = my - offsetY;
-        float clickPos = (newThumbY - tableBodyY) / (float) tableBodyHeight;
-        scrollY = (int) (clickPos * maxScrollY);
-        scrollY = constrain(scrollY, 0, maxScrollY);
+      // Check if clicked on thumb
+      if (my >= scrollTrackY + thumbY && my <= scrollTrackY + thumbY + thumbHeight) {
+        isDraggingThumb = true;
+        // Store the offset between mouse and top of thumb
+        offsetY = my - (scrollTrackY + thumbY);
       } else {
         // Clicked on track but not on thumb - jump to that position
-        float clickPos = (my - scrollTrackY) / (float) tableBodyHeight;
-        scrollY = (int) (clickPos * maxScrollY);
+        float clickPos = (my - (scrollTrackY + thumbY)) / (float)tableBodyHeight;
+        scrollY = (int)(clickPos * maxScrollY);
         scrollY = constrain(scrollY, 0, maxScrollY);
+        thumbY = (tableBodyHeight - thumbHeight) * ((float)scrollY / maxScrollY);
+        isDraggingThumb = true;
+        offsetY = my - (scrollTrackY + thumbY);
       }
     }
   }
 
   void mouseDragged(int my) {
     if (isDraggingThumb) {
-      float newThumbY = my - offsetY;
-      float clickPos = (newThumbY - tableBodyY) / (float) tableBodyHeight;
-      scrollY = (int) (clickPos * maxScrollY);
+      int scrollTrackY = tableBodyY + 90;
+
+      // Calculate new relative position within scrollbar track
+      float relativeY = my - scrollTrackY - offsetY;
+
+      // Calculate what percentage of the scrollbar we've moved
+      float scrollPercentage = relativeY / (float)(tableBodyHeight - thumbHeight);
+
+      // Convert directly to scroll position
+      scrollY = (int)(scrollPercentage * maxScrollY);
       scrollY = constrain(scrollY, 0, maxScrollY);
-      lastMouseY = my;
     }
   }
+
 
   void mouseReleased() {
     isDraggingThumb = false;

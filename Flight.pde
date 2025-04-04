@@ -1,16 +1,15 @@
 class Flight {
-  String flightNumber, departureTime, arrivalTime, destination, origin, date;
+  String flightNumber, departureTime, arrivalTime, destination, date;
   String originState, destState, originCity, destCity;
   String CRS_DEP_TIME, DEP_TIME, CRS_ARR_TIME, ARR_TIME;
 
   Flight(String flightNumber, String departureTime, String arrivalTime,
-    String destination, String origin, String date, String originState, String destState,
+    String destination, String date, String originState, String destState,
     String originCity, String destCity) {
     this.flightNumber = flightNumber;
     this.departureTime = formatTime(departureTime);
     this.arrivalTime = formatTime(arrivalTime);
     this.destination = destination;
-    this.origin = origin;
     this.date = formatDate(date);
     this.originState = originState;
     this.destState = destState;
