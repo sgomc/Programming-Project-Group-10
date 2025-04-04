@@ -9,16 +9,20 @@ class Statistics
   int currentPlot;
   int windowWidth = 0;
   int windowHeight = 0;
+  int x,y;
+  
   public Statistics(int x,int y, int windowWidth, int windowHeight ,int num)
   {
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
     
+    this.x = x;
+    this.y = y;
     Axis = new Axis(num,x,y);
   }
 
   void plot(String type, String header, String cityPattern, String pattern, color barColor, int plot, String xLabel, String yLabel)
-  {
+  {   
     currentPlot = plot;
     HashMap<String, Integer> map = new HashMap<>();
     for (TableRow item : table.matchRows(cityPattern, pattern))
@@ -45,25 +49,30 @@ class Statistics
       if (histMax < value) histMax = value;
       if (histMin > value) histMin = value;
     }
-    Axis.XYaxis(histMax,histMin,xLabel,yLabel);
+    
     switch(type.toUpperCase())
     {
       case "BAR":
+        
         barChart(map,barColor,plot,histMax);
         break;
-      case "LINE":
+      case "LINE": 
         lineGraph(map,barColor,plot,histMax);
         break;
       default:
         println("not a graph!!");
     }
+    Axis.XYaxis(histMax,histMin,xLabel,yLabel);
+    textSize(windowHeight/66.66);
+    text(xLabel, ((currentPlot == 1) ? (Axis.Xstart +(Axis.Xend-Axis.Xstart)/2):(Axis.X1start +(Axis.X1end-Axis.X1start)/2)), Axis.Ystart+60);
+    text("Max\n"+yLabel+ ": " +histMax+ "\n\nMin\n"+yLabel+ ": " +histMin, (currentPlot == 1) ? Axis.Xstart-100:Axis.X1start-100, Axis.Yend+100);
 
   }
   void lineGraph(HashMap<String, Integer> map,color pointColor, int plot,float histMax)
   {
     int counter = 1;
     int strokeWeight = (plot == 1) ?(Axis.Xend-Axis.Xstart)/(map.size()) :(Axis.X1end-Axis.X1start)/(map.size());
-    if (strokeWeight > 20) strokeWeight = 20;
+    
     
     SortedSet<String> set = new TreeSet<>(   Comparator.comparingInt((String s) -> s.matches("\\d+") ? Integer.parseInt(s) : Integer.MAX_VALUE).thenComparing(String::compareTo));
     set.addAll(map.keySet());
@@ -79,7 +88,7 @@ class Statistics
     {
 
       //println(list.get(counter));
-      int position = ((plot == 1)? Axis.Xstart:Axis.X1start)+counter++*strokeWeight;
+      int position = ((plot == 1)? Axis.Xstart:Axis.X1start)+counter++*( strokeWeight);
       int y = int( (Integer.valueOf(map.get(item))-0)*range);
       vertex(position, Axis.Ystart - y);
       text(item, -strokeWeight/5+position, Axis.Ystart+30);
@@ -94,7 +103,6 @@ class Statistics
     set.addAll(map.keySet());
     int strokeWeight = (plot == 1) ?(Axis.Xend-Axis.Xstart)/(map.size()) :(Axis.X1end-Axis.X1start)/(map.size());
 
-    if (strokeWeight > 20) strokeWeight = 20;
 
     
     strokeCap(SQUARE);
@@ -168,7 +176,6 @@ class Statistics
         switch(currentPlot)
         {
         case 1:
-          background(255);
           line(Xstart, Ystart, Xstart, Yend);
           line(Xstart, Ystart, Xend, Ystart);
           line(Xend, Ystart, Xend-5, Ystart-5);
@@ -205,9 +212,7 @@ class Statistics
 
         break;
       }
-    textSize(windowHeight/66.66);
-    text(xLabel, ((currentPlot == 1) ? (Axis.Xstart +(Axis.Xend-Axis.Xstart)/2):(Axis.X1start +(Axis.X1end-Axis.X1start)/2)), Axis.Ystart+60);
-    text("Max\n"+yLabel+ ": " +max+ "\n\nMin\n"+yLabel+ ": " +min, (currentPlot == 1) ? Axis.Xstart-100:Axis.X1start-100, Axis.Yend+100);
+    
     }
 
 
