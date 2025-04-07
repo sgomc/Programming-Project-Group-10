@@ -15,7 +15,7 @@ class StatisticsWindow extends Window {
     
     // Display Content
     fill(0);
-    stats = new Statistics(x+150,y+100,w-200,h-200,2);
+    Statistics stats = new Statistics(x+150,y+100,w-200,h-200,2);
     TableRow row = table.findRow(searchedFlightNumber,"MKT_CARRIER_FL_NUM");
     if(row != null){
       println(row.getString("DEST_STATE_ABR"));
