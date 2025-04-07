@@ -1,0 +1,24 @@
+-ABOUT-
+
+The VAST Map Project is a project designed to give easy access flight data all around the USA so you can arrange or analyse a flight. Our team of five, Veronika, Maccolins, Amy, Stephen, Thomas, have worked together to design 
+a project that is accessible, smooth and dynamic, with many features to provide ease of access, such as an interactable map and a statistics page.
+
+Our team has worked hard to make sure the project is as "Vast" as possible. The roles that we took during the project are as follows:
+
+Veronika Zavatska (Project Manager)
+Led the overall project and handled core development including the flight menu system, airport displays, UI enhancements, and data optimization.
+
+Maccolins Obijiaku
+Developed data visualization through histograms in statistics page and created the project's introduction section.
+
+Amy Murray
+Implemented filtering functionality, scroll features, UI improvements, and a special option for tracking delayed flights.
+
+Stephen Conboy
+Provided geographical elements including the U.S. map, airport location data, and the flight path simulation feature.
+
+Thomas Kennedy
+Created state selection buttons, developed the flexible date search functionality, performed optimization work, and managed the about page.
+
+
+We hope that you get as much out of the VAST Map as we've had designing it. We sincerely thank you for giving the project a try.
