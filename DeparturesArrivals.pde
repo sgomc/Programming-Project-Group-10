@@ -66,6 +66,7 @@ class DeparturesArrivals extends Window {
     allFlightsRadio.draw();
     delayedFlightsRadio.draw();
     onTimeFlightsRadio.draw();
+    earlyFlightsRadio.draw();
     
     showPlaneButton.display();
     if(showPlaneButton.checkClick(mouseX,mouseY) && flights.size()>0){
