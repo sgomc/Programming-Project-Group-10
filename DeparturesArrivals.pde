@@ -49,7 +49,16 @@ class DeparturesArrivals extends Window {
   }
 
   void display() {
-    if (!isVisible) return;
+    if (!isVisible) 
+    {
+      selectedTab = "Departures";
+      delayFilter = "All"; // Reset filter to "All Flights"
+      allFlightsRadio.isSelected = true;
+      delayedFlightsRadio.isSelected = false;
+      onTimeFlightsRadio.isSelected = false;
+      earlyFlightsRadio.isSelected = false;
+      return;
+    }
     super.display();
     departuresTab.checkHover(mouseX, mouseY);
     arrivalsTab.checkHover(mouseX, mouseY);
@@ -265,7 +274,16 @@ class DeparturesArrivals extends Window {
 
 
   void checkTabClick(int mx, int my) {
-    if (!isVisible) return;
+    if (!isVisible) 
+    {
+      selectedTab = "Departures";
+      delayFilter = "All"; // Reset filter to "All Flights"
+      allFlightsRadio.isSelected = false;
+      delayedFlightsRadio.isSelected = false;
+      onTimeFlightsRadio.isSelected = false;
+      earlyFlightsRadio.isSelected = false;
+      return;
+    }
 
     if (departuresTab.isClicked(mx, my)) {
       selectedTab = "Departures";
