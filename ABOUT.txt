@@ -1,0 +1,5 @@
+The VAST Map Project is a project designed to give easy access flight data all around the USA so you can arrange or analyse a flight. Our team of five, Veronika, Maccolins, Amy, Stephen, Thomas, have worked together to design a project that is accessible, smooth and dynamic, with many features to provide ease of access, such as an interactable map and a statistics page.
+
+Our team has worked hard to make sure the project is as "Vast" as possible. We sincerely thank you for giving the project a try. The roles that we took during the project are as follows:
+
+

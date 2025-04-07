@@ -1,4 +1,4 @@
-//class statistics done by Maccollins Obijiaku
+//#Done by Maccollins Obijiaku
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.Comparator;
@@ -63,8 +63,9 @@ class Statistics
         println("not a graph!!");
     }
     Axis.XYaxis(histMax,histMin,xLabel,yLabel);
-    textSize(windowHeight/66.66);
+    textSize(18);
     text(xLabel, ((currentPlot == 1) ? (Axis.Xstart +(Axis.Xend-Axis.Xstart)/2):(Axis.X1start +(Axis.X1end-Axis.X1start)/2)), Axis.Ystart+60);
+    textSize(windowHeight/63);
     text("Max\n"+yLabel+ ": " +histMax+ "\n\nMin\n"+yLabel+ ": " +histMin, (currentPlot == 1) ? Axis.Xstart-100:Axis.X1start-100, Axis.Yend+100);
 
   }
@@ -102,8 +103,6 @@ class Statistics
     SortedSet<String> set = new TreeSet<>(   Comparator.comparingInt((String s) -> s.matches("\\d+") ? Integer.parseInt(s) : Integer.MAX_VALUE).thenComparing(String::compareTo));
     set.addAll(map.keySet());
     int strokeWeight = (plot == 1) ?(Axis.Xend-Axis.Xstart)/(map.size()) :(Axis.X1end-Axis.X1start)/(map.size());
-
-
     
     strokeCap(SQUARE);
     stroke(pointColor);
@@ -150,7 +149,6 @@ class Statistics
 
     void XYaxis(float max,float min,String xLabel,String yLabel)
     {
-
       stroke(0);
       strokeWeight(1);
       strokeJoin(ROUND);
@@ -209,12 +207,8 @@ class Statistics
 
           break;
         }
-
         break;
       }
-    
     }
-
-
   }
 }

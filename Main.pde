@@ -1,4 +1,4 @@
-import java.util.HashSet; //<>// //<>//
+import java.util.HashSet; //<>// //<>// //<>//
 import java.util.HashMap;
 import processing.sound.*;
 
@@ -51,8 +51,8 @@ void setup() {
   image.resize(width, height);
   icon = loadImage("images/airplane.png");
   icon.resize(50, 50);
-  
-  plane = loadImage("Plane.png");
+
+  plane = loadImage("images/Plane.png");
   plane.resize(height/15, height/15);
   boeing = new Plane();
   planeFly = new SoundFile(this, "airplane-lift-off-01.mp3");
@@ -86,6 +86,8 @@ void setup() {
   statisticsWindow.isVisible = false;
   aboutWindow = new AboutWindow(4, 50, width - 8, height - 54);
   aboutWindow.isVisible = false;
+  aboutWindow.loadIntroText();
+  aboutWindow.loadImages(); 
 
   closeButton = new Button(width - 50, 5, 40, 40, "X");
   closeButton.hasBackground = false; // No background when not hovered
@@ -203,10 +205,10 @@ void draw() {
     closeButton.display();
     closeButton.checkHover(mouseX, mouseY);
   }
-  
-  
+
+
   //draw plane animation over everything else
-  if(boeing.isVisible){
+  if (boeing.isVisible) {
     image(image, 0, 0);
     for (City city : cities) {
       city.run();
@@ -238,13 +240,14 @@ void mousePressed() {
     }
   }
   mainMenu.mousePressed(mouseX, mouseY);
-  departuresArrivals.mousePressed(mouseX, mouseY);
+  
   if (departuresArrivals.isVisible)
   {
     departuresArrivals.checkClose(mouseX, mouseY);
     departuresArrivals.checkTabClick(mouseX, mouseY);
   }
 
+  departuresArrivals.mousePressed(mouseX, mouseY);
   if (statisticsTab.isClicked(mouseX, mouseY)) {
     statisticsTab.isSelected = true;
     aboutTab.isSelected = false;
@@ -329,20 +332,34 @@ void keyPressed() {
     println("Key pressed: " + key);
     departuresArrivals.keyPressed(); //forwarding key events to DeparturesArrivals v of keyPressed()
   }
-  
+
   /*testing
-  if (key == '#'){
-    boeing.reset("SPN","JFK");
-  }
-  */
+   if (key == '#'){
+   boeing.reset("SPN","JFK");
+   }
+   */
 }
 
 void mouseWheel(MouseEvent event) {
+  boolean eventHandled = false;
   if (departuresArrivals.isVisible) {
-    departuresArrivals.mouseWheel(event);
+
+
+    // Check if mouse is over departuresArrivals window
+    if (mouseX >= departuresArrivals.x && mouseX <= departuresArrivals.x + departuresArrivals.w &&
+      mouseY >= departuresArrivals.y && mouseY <= departuresArrivals.y + departuresArrivals.h) {
+      departuresArrivals.mouseWheel(event);
+      eventHandled = true;
+    }
+
+    // Only check mainMenu if event wasn't handled by departuresArrivals
   }
   if (mainMenu.isVisible) {
-    mainMenu.mouseWheel(event);
+    if (!eventHandled && mouseX >= mainMenu.x && mouseX <= mainMenu.x + mainMenu.w &&
+      mouseY >= mainMenu.y && mouseY <= mainMenu.y + mainMenu.h) {
+      mainMenu.mouseWheel(event);
+      eventHandled = true;
+    }
   }
 }
 

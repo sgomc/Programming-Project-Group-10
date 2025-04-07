@@ -107,7 +107,7 @@ class DeparturesArrivals extends Window {
         text("Arrival Time", TIME_COLUMN_X, tableY);
       }
     }
-    int dateColumnX = delayFilter.equals("Delayed") ? DATE_COLUMN_X_DELAYED : DATE_COLUMN_X_NORMAL;
+    int dateColumnX = delayFilter.equals("Delayed") || delayFilter.equals("Early") ? DATE_COLUMN_X_DELAYED : DATE_COLUMN_X_NORMAL;
     text("Date", dateColumnX, tableY);
 
     // Draw a line under the headers

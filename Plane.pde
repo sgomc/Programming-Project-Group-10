@@ -1,27 +1,3 @@
-/*
-To go in Main
-import processing.sound.*;
-import java.util.Map;
-
-PImage plane;
-final int framerate=60;
-Plane boeing;
-SoundFile planeFly;
-
-  plane = loadImage("Plane.png");
-  plane.resize(height/15, height/15);
-  boeing = new Plane(width/2,height/2,100,100);
-  planeFly = new SoundFile(this, "airplane-lift-off-01.mp3");
-  
-  if(boeing.isVisible){
-    boeing.fly();
-    boeing.draw();
-  }
-
-
-*/
-
-
 class Plane{
   
   final int travelTime=2;
@@ -53,27 +29,6 @@ class Plane{
       airportCoords.put(parts[0],parts[1]+parts[2]);
     }
   }
-  //String[] results = text.split("(?<=\\G.{" + 4 + "})");   //allegedly splits string every 4 chars
-  
-  /*
-  Plane(int originX, int originY, int destX, int destY){
-    
-    this.loadData();
-    isVisible=true;
-    this.originX = originX;
-    this.originY = originY;
-    //this.destX = destX;
-    //this.destY = destY;
-    this.x = 0;
-    this.y = 0;
-    timer=0;
-    angle=atan2(-originY+destY,-originX+destX)+HALF_PI;
-    distance=sqrt((destX-originX)*(destX-originX) + (destY-originY)*(destY-originY));
-  
-  }
-  */
-  
-  
   
   Plane(){
     
@@ -149,11 +104,5 @@ class Plane{
     //audio
     planeFly.play(3.5); //rate, pos, amp, add, cue
     planeFly.amp(.1); //volume
-    
-  
-  
-  
-  }
-  
-  
+  }  
 }
