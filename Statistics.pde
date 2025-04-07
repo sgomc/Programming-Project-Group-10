@@ -1,4 +1,4 @@
-//#Done by Maccollins Obijiaku
+//class statistics done by Maccollins Obijiaku
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.Comparator;
