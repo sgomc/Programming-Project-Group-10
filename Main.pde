@@ -23,7 +23,7 @@ boolean blockInteractions = false;
 ArrayList<Searchbar> searchbars = new ArrayList<Searchbar>();
 ArrayList<Airport> airports = new ArrayList<Airport>();
 CheckBox sortCitiesCheckBox;
-RadioButton allFlightsRadio, delayedFlightsRadio, onTimeFlightsRadio;
+RadioButton allFlightsRadio, delayedFlightsRadio, onTimeFlightsRadio, earlyFlightsRadio;
 HashMap<String, ArrayList<Flight>> departuresByState = new HashMap<>();
 HashMap<String, ArrayList<Flight>> arrivalsByState = new HashMap<>();
 ArrayList<Flight> flights = new ArrayList<Flight>(); // Use Flight instead of DataPoint
