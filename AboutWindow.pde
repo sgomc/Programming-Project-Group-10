@@ -1,6 +1,15 @@
 class AboutWindow extends Window {
+  String aboutWindowText;
+  
   AboutWindow(int x, int y, int w, int h) {
     super(x, y, w, h);
+    String[] aboutWindowString = loadStrings("ABOUT.txt");
+    aboutWindowText = "";
+    for(String s : aboutWindowString)
+    {
+      aboutWindowText += s;
+      aboutWindowText += "\n";
+    }
   }
 
   void display() {
@@ -16,7 +25,7 @@ class AboutWindow extends Window {
     fill(0);
     textSize(18);
     textAlign(LEFT, TOP);
-    text("About Content", 20, 50);
+    text(aboutWindowText, 20, 50);
     closeButton.display();
     popMatrix();
   }
