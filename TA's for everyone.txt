@@ -25,7 +25,7 @@ Amy      + filter by dates, lateness, and allow the user to input a flight numbe
 Stephen  + find the clear U.S. map
          + list all the airports 
          + find their coordinates in Processing 
-         =  Add the plane which will fly to the selected location (Stephen proposed idea before) -> select the flight from departures arrivals, click on it, then the windows          close to show the simulation, and then they open again at the point they were before.
+         + Add the plane which will fly to the selected location (Stephen proposed idea before) -> select the flight from departures arrivals, click on it, then the windows           close to show the simulation, and then they open again at the point they were before.
 
 Tommy    + create buttons for each state
          + Search for date, 22/01/2022, 22 January
