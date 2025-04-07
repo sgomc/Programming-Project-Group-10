@@ -3,7 +3,7 @@ class DeparturesArrivals extends Window {
   String selectedDate= "";
 
   State currentState;
-  String delayFilter = "All"; // "All", "Delayed", "OnTime"
+  String delayFilter = "All"; // "All", "Delayed", "OnTime", "Early"
 
   int scrollY = 0;
   int maxScrollY = 0;
@@ -37,9 +37,10 @@ class DeparturesArrivals extends Window {
     allFlightsRadio = new RadioButton(x + 200, y + 130, 120, 20, "All Flights", delayFilter.equals("All"));
     delayedFlightsRadio = new RadioButton(x + 370, y + 130, 120, 20, "Delayed Only", delayFilter.equals("Delayed"));
     onTimeFlightsRadio = new RadioButton(x + 540, y + 130, 120, 20, "On Time Only", delayFilter.equals("OnTime"));
-    
+    earlyFlightsRadio = new RadioButton(x + 710, y + 130, 120, 20, "Early Only", delayFilter.equals("Early")); 
+
      //Plane button
-    showPlaneButton = new Button(x + 740, y + 120, 140, 30, "Show Top Flight");
+    showPlaneButton = new Button(x + 650, y + 80, 140, 30, "Show Top Flight");
 
     flights.clear();
     flightsPerPage = (h - tableStartY - 30) / rowHeight;
@@ -91,7 +92,7 @@ class DeparturesArrivals extends Window {
     if (selectedTab.equals("Departures")) {
       text("Destination", 120, tableY);
       text("Origin airport", 410, tableY);
-      if (delayFilter.equals("Delayed")) {
+      if (delayFilter.equals("Delayed") || delayFilter.equals("Early")) {
         text("Scheduled → Actual", TIME_COLUMN_X, tableY);
       } else {
         text("Dep Time", TIME_COLUMN_X, tableY);
@@ -99,7 +100,7 @@ class DeparturesArrivals extends Window {
     } else {
       text("Origin", 120, tableY);
       text("Arrival airport", 410, tableY);
-      if (delayFilter.equals("Delayed")) {
+      if (delayFilter.equals("Delayed") || delayFilter.equals("Early")) {
         text("Scheduled → Actual", TIME_COLUMN_X, tableY);
       } else {
         text("Arrival Time", TIME_COLUMN_X, tableY);
@@ -187,7 +188,7 @@ class DeparturesArrivals extends Window {
         text(locationInfo, 120, yPos);
 
         // Time information
-        if (delayFilter.equals("Delayed")) {
+        if (delayFilter.equals("Delayed") || delayFilter.equals("Early")) {
           // For delayed flights, show both scheduled and actual times
           String scheduledTime = selectedTab.equals("Departures") ?
             flight.formatTime(flight.CRS_DEP_TIME) :
@@ -206,8 +207,12 @@ class DeparturesArrivals extends Window {
           line(TIME_COLUMN_X, yPos + 5, TIME_COLUMN_X + scheduledWidth, yPos + 5);
           noStroke();
 
-          // Show actual time in red
-          fill(255, 0, 0);
+          // Show actual time in red (delayed) or green (early)
+          if (delayFilter.equals("Delayed")) {
+            fill(255, 0, 0); // Red for delayed
+          } else {
+            fill(0, 200, 0); // Green for early
+          }
           text(actualTime, TIME_COLUMN_X + scheduledWidth + TIME_SPACING, yPos);
           fill(0); // Reset to black
         } else {
@@ -267,12 +272,14 @@ class DeparturesArrivals extends Window {
       allFlightsRadio.isSelected = true;
       delayedFlightsRadio.isSelected = false;
       onTimeFlightsRadio.isSelected = false;
+      earlyFlightsRadio.isSelected = false;
     } else if (arrivalsTab.isClicked(mx, my)) {
       selectedTab = "Arrivals";
       delayFilter = "All"; // Reset filter to "All Flights"
       allFlightsRadio.isSelected = true;
       delayedFlightsRadio.isSelected = false;
       onTimeFlightsRadio.isSelected = false;
+      earlyFlightsRadio.isSelected = false;
     }
 
     // Update selected tab's state
@@ -285,15 +292,33 @@ class DeparturesArrivals extends Window {
   boolean isFlightDelayed(Flight flight) {
     try {
       if (selectedTab.equals("Departures")) {
-        // For departures, compare scheduled vs actual departure time
+        // departures -> compare scheduled vs actual departure time
         int scheduled = Integer.parseInt(flight.CRS_DEP_TIME);
         int actual = Integer.parseInt(flight.DEP_TIME);
         return actual > scheduled; // Delayed if actual > scheduled
       } else {
-        // For arrivals, compare scheduled vs actual arrival time
+        //arrivals -> compare scheduled vs actual arrival time
         int scheduled = Integer.parseInt(flight.CRS_ARR_TIME);
         int actual = Integer.parseInt(flight.ARR_TIME);
         return actual > scheduled; // Delayed if actual > scheduled
+      }
+    }
+    catch (NumberFormatException e) {
+      return false;
+    }
+  }
+ boolean isFlightEarly(Flight flight) {
+    try {
+      if (selectedTab.equals("Departures")) {
+        // departures -> compare scheduled vs actual departure time
+        int scheduled = Integer.parseInt(flight.CRS_DEP_TIME);
+        int actual = Integer.parseInt(flight.DEP_TIME);
+        return actual < scheduled; // Early if actual < scheduled
+      } else {
+        //arrivals -> compare scheduled vs actual arrival time
+        int scheduled = Integer.parseInt(flight.CRS_ARR_TIME);
+        int actual = Integer.parseInt(flight.ARR_TIME);
+        return actual < scheduled; // Early if actual < scheduled
       }
     }
     catch (NumberFormatException e) {
@@ -309,18 +334,28 @@ class DeparturesArrivals extends Window {
       allFlightsRadio.isSelected = true;
       delayedFlightsRadio.isSelected = false;
       onTimeFlightsRadio.isSelected = false;
+      earlyFlightsRadio.isSelected = false;
       filterFlights();
     } else if (delayedFlightsRadio.isClicked(mx, my)) {
       delayFilter = "Delayed";
       allFlightsRadio.isSelected = false;
       delayedFlightsRadio.isSelected = true;
       onTimeFlightsRadio.isSelected = false;
+      earlyFlightsRadio.isSelected = false;
       filterFlights();
     } else if (onTimeFlightsRadio.isClicked(mx, my)) {
       delayFilter = "OnTime";
       allFlightsRadio.isSelected = false;
       delayedFlightsRadio.isSelected = false;
       onTimeFlightsRadio.isSelected = true;
+      earlyFlightsRadio.isSelected = false;
+      filterFlights();
+    } else if (earlyFlightsRadio.isClicked(mx, my)) {
+      delayFilter = "Early";
+      allFlightsRadio.isSelected = false;
+      delayedFlightsRadio.isSelected = false;
+      onTimeFlightsRadio.isSelected = false;
+      earlyFlightsRadio.isSelected = true;
       filterFlights();
     }
   }
@@ -394,10 +429,14 @@ class DeparturesArrivals extends Window {
       boolean matchesDelayFilter = true;
       if (!delayFilter.equals("All")) {
         boolean isDelayed = isFlightDelayed(flight);
+        boolean isEarly = isFlightEarly(flight);
+        
         if (delayFilter.equals("Delayed")) {
           matchesDelayFilter = isDelayed;
         } else if (delayFilter.equals("OnTime")) {
-          matchesDelayFilter = !isDelayed;
+          matchesDelayFilter = !isDelayed && !isEarly;
+        } else if (delayFilter.equals("Early")) {
+          matchesDelayFilter = isEarly;
         }
       }
 
