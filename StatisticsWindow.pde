@@ -23,17 +23,17 @@ class StatisticsWindow extends Window {
     if(row != null){
       if(departuresTab.isSelected)
       {
-        stats.plot("BAR","DEP_TIME",row.getString("DEST_STATE_ABR"),"DEST_STATE_ABR",#0000FF,1,"Hours","Freq");
-        stats.plot("LINE","DEP_TIME",row.getString("DEST_STATE_ABR"),"DEST_STATE_ABR",#00FF00,2,"Hours","Freq");
+        stats.plot("BAR","DEP_TIME",row.getString("DEST_STATE_ABR"),"DEST_STATE_ABR",color(150, 175, 255),1,"Hours","Freq");
+        stats.plot("LINE","DEP_TIME",row.getString("DEST_STATE_ABR"),"DEST_STATE_ABR",color(40, 95, 255),2,"Hours","Freq");
         depOrArr = "Departures: ";
       }else if(arrivalsTab.isSelected){
-        stats.plot("BAR","ARR_TIME",row.getString("ORIGIN_STATE_ABR"),"ORIGIN_STATE_ABR",#0000FF,1,"Hours","Freq");
-        stats.plot("LINE","ARR_TIME",row.getString("ORIGIN_STATE_ABR"),"ORIGIN_STATE_ABR",#00FF00,2,"Hours","Freq");
+        stats.plot("BAR","ARR_TIME",row.getString("ORIGIN_STATE_ABR"),"ORIGIN_STATE_ABR",color(150, 175, 255),1,"Hours","Freq");
+        stats.plot("LINE","ARR_TIME",row.getString("ORIGIN_STATE_ABR"),"ORIGIN_STATE_ABR",color(40, 95, 255),2,"Hours","Freq");
         depOrArr = "Arrivals: ";
       }
     }else{
-        stats.plot("BAR","FL_DATE",".*","ORIGIN_CITY_NAME",#0000FF,1,"Days","Freq");
-        stats.plot("BAR","FL_DATE",".*","DEST_CITY_NAME",#00FF00,2,"Days","Freq");
+        stats.plot("BAR","FL_DATE",".*","ORIGIN_CITY_NAME",color(150, 175, 255),1,"Days","Freq");
+        stats.plot("BAR","FL_DATE",".*","DEST_CITY_NAME",color(40, 95, 255),2,"Days","Freq");
     }
     strokeWeight(1);
     textSize(18);
