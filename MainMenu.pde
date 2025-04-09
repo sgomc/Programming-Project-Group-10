@@ -1,4 +1,4 @@
-class MainMenu extends Window { //<>//
+class MainMenu extends Window { 
   Button button;
   State currentState;
   int tableBodyY = 180;
@@ -287,6 +287,27 @@ class MainMenu extends Window { //<>//
         stateAirports.clear();
         stateAirports.addAll(originalAirports);
         println("Original city order restored");
+      }
+    }
+  }
+
+void checkClose(int mx, int my) {
+    if (!isVisible) return;
+
+    // Adjust mouse coordinates to be relative to the window
+    int relativeX = mx - x;
+    int relativeY = my - y;
+
+    if (closeButton.checkClick(relativeX, relativeY)) {
+      isVisible = false;
+      this.currentState = null;
+      closeButton.wasClicked = false;
+      for (Button stateButton : stateButtons) {
+        stateButton.setActive(false);  // Set the active button for the current state
+      }
+      for (Searchbar s : searchbars) {
+        s.setActive(false);
+        s.searchbarText = ""; // Clear the search text
       }
     }
   }
