@@ -6,7 +6,7 @@
 **An interactive application for managing and visualizing flight data, developed as a group project.**
 
 
-## ✨ Project Vision
+## Project Vision
 
 The **VAST Map Project** is designed to provide easy access to flight data across the USA, helping users arrange or analyze flights efficiently. Our team of five — **Veronika, Maccolins, Amy, Stephen, and Thomas** — worked hard to make this project accessible, smooth, and dynamic. With features like an interactive map and a statistics page, we’ve aimed to make the project as *vast* as possible.
 
