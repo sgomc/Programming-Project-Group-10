@@ -62,5 +62,3 @@ To run the application:
 This project is licensed under the [MIT License](LICENSE).
 
 ---
-
-Feel free to customize this `README.md` to better fit your project's specifics. If you need assistance with any part of the application or further customization, don't hesitate to ask!
